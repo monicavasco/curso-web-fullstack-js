@@ -9,7 +9,4 @@ app.use(bodyParser.json());
 
 app.use(accountsRouter);
 
-const port = parseInt(`${process.env.PORT}`);
-
-app.listen(3000);
-console.log(`Running on port ${port}`);
+export default app;
