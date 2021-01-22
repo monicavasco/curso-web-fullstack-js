@@ -58,5 +58,20 @@ function setAccount(req: Request, res: Response, next: any){
   }
 }
 
-export default { getAccounts, getAccount, addAccount, setAccount }
+function loginAccount(req: Request, res: Response, next: any){
+  try {
+    const loginParams = req.body as IAccount;
+    const index = accounts.findIndex(item => item.email === loginParams.email && item.password === loginParams.password);
+    if(index === -1) return res.status(401).end();
+
+    res.json({ auth: true, token: {} });
+
+  }
+  catch (error) {
+    console.log(error);
+    res.status(400).end();
+  }
+}
+
+export default { getAccounts, getAccount, addAccount, setAccount, loginAccount }
 
