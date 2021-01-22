@@ -1,7 +1,6 @@
 import request from 'supertest'
 import { Response } from 'express';
 import app from './../src/app'
-import { expectCt } from 'helmet';
 
 describe('Testando rotas do accounts', () => {
   it('GET /accounts/ - Deve retornar statusCode 200', async () => {
