@@ -11,6 +11,4 @@ const app = express_1.default();
 app.use(helmet_1.default());
 app.use(body_parser_1.default.json());
 app.use(accounts_1.default);
-const port = parseInt(`${process.env.PORT}`);
-app.listen(3000);
-console.log(`Running on port ${port}`);
+exports.default = app;
