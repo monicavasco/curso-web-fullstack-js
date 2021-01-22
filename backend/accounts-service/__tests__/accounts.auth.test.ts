@@ -55,4 +55,11 @@ describe('Testando rotas de autenticação', () => {
       expect(resultado.status).toEqual(401);
   })
 
+  it('POST /accounts/logout - 200 OK', async () => {
+    const resultado = await request(app)
+      .post('/accounts/logout');
+
+      expect(resultado.status).toEqual(200);
+  })
+
 })

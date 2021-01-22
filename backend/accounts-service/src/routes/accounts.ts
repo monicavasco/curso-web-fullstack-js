@@ -36,4 +36,6 @@ router.post('/accounts/', validateAccount, accountsController.addAccount);
 
 router.post('/accounts/login', validateLogin, accountsController.loginAccount);
 
+router.post('/accounts/logout', accountsController.logoutAccount);
+
 export default router;

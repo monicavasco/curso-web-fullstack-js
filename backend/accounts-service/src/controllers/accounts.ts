@@ -73,5 +73,9 @@ function loginAccount(req: Request, res: Response, next: any){
   }
 }
 
-export default { getAccounts, getAccount, addAccount, setAccount, loginAccount }
+function logoutAccount(req: Request, res: Response, next: any){
+  res.json({auth: false, token: null});
+}
+
+export default { getAccounts, getAccount, addAccount, setAccount, loginAccount, logoutAccount }
 
