@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const accountModel_1 = __importDefault(require("../models/accountModel"));
+const auth_1 = __importDefault(require("../auth"));
 const accounts = [];
 function getAccounts(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -24,66 +25,78 @@ function getAccounts(req, res, next) {
     });
 }
 function getAccount(req, res, next) {
-    try {
-        const id = parseInt(req.params.id);
-        if (!id)
-            throw new Error("ID is invalid format.");
-        const index = accounts.findIndex(item => item.id === id);
-        if (index === -1)
-            return res.status(404).end();
-        else
-            res.json(accounts[index]);
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).end();
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const id = parseInt(req.params.id);
+            if (!id)
+                throw new Error("ID is invalid format.");
+            const account = yield accountModel_1.default.findById(id);
+            if (account === null)
+                return res.status(404).end();
+            else {
+                account.password = '';
+                res.json(account);
+            }
+        }
+        catch (error) {
+            console.log(`getAccount: ${error}`);
+            res.status(400).end();
+        }
+    });
 }
 function addAccount(req, res, next) {
-    try {
-        const newAccount = req.body;
-        accounts.push(newAccount);
-        res.status(201).json(newAccount);
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).end();
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const newAccount = req.body;
+            newAccount.password = auth_1.default.hashPassword(newAccount.password);
+            const result = yield accountModel_1.default.add(newAccount);
+            newAccount.password = '';
+            newAccount.id = result.id;
+            res.status(201).json(newAccount);
+        }
+        catch (error) {
+            console.log(`addAccount: ${error}`);
+            res.status(400).end();
+        }
+    });
 }
 function setAccount(req, res, next) {
-    try {
-        const accountId = parseInt(req.params.id);
-        if (!accountId)
-            throw new Error('ID is in invalid format.');
-        const accountParams = req.body;
-        const index = accounts.findIndex(item => item.id === accountId);
-        if (index === -1)
-            return res.status(404).end();
-        const originalAccount = accounts[index];
-        if (accountParams.name)
-            originalAccount.name = accountParams.name;
-        if (accountParams.password)
-            originalAccount.password = accountParams.password;
-        accounts[index] = originalAccount;
-        res.status(200).json(originalAccount);
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).end();
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const accountId = parseInt(req.params.id);
+            if (!accountId)
+                throw new Error('ID is in invalid format.');
+            const accountParams = req.body;
+            accountParams.password = auth_1.default.hashPassword(accountParams.password);
+            const updatedAccount = yield accountModel_1.default.set(accountId, accountParams);
+            updatedAccount.password = '';
+            res.status(200).json(updatedAccount);
+        }
+        catch (error) {
+            console.log(`setAccount: ${error}`);
+            res.status(400).end();
+        }
+    });
 }
 function loginAccount(req, res, next) {
-    try {
-        const loginParams = req.body;
-        const index = accounts.findIndex(item => item.email === loginParams.email && item.password === loginParams.password);
-        if (index === -1)
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const loginParams = req.body;
+            const account = yield accountModel_1.default.findByEmail(loginParams.email);
+            if (account !== null) {
+                const isValid = auth_1.default.comparePassword(loginParams.password, account.password);
+                if (isValid) {
+                    const token = yield auth_1.default.sign(account.id);
+                    return res.json({ auth: true, token });
+                }
+            }
             return res.status(401).end();
-        res.json({ auth: true, token: {} });
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).end();
-    }
+        }
+        catch (error) {
+            console.log(`loginAccount: ${error}`);
+            res.status(400).end();
+        }
+    });
 }
 function logoutAccount(req, res, next) {
     res.json({ auth: false, token: null });

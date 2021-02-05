@@ -1,0 +1,71 @@
+[33mcommit 4f908ba19d67ef349be53ba246d87f3c5f86dadb[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Mon Feb 1 11:27:23 2021 -0300
+
+    accounts-service
+
+[33mcommit b8273af13e82b6f8bc3287db0495539d2161cece[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Fri Jan 22 19:23:22 2021 -0300
+
+    test: POST /accounts/logout - 200 OK
+
+[33mcommit 928293aa3efa846a43b904a2d57297e32973f06f[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Fri Jan 22 19:18:05 2021 -0300
+
+    test: POST /accounts/login - 200 OK
+
+[33mcommit a6d9b3037c3f1df84aa1cccd9e642de79428164c[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Fri Jan 22 19:16:27 2021 -0300
+
+    test: POST /accounts/login - 422 Unprocessable Entity
+
+[33mcommit 54a1066bacd77104ec47bd05ad43f0378d50919d[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Fri Jan 22 19:11:24 2021 -0300
+
+    test:POST /accounts/login - 401 unauthorized
+
+[33mcommit 770cd7d861a7a112088758cac8215dedd80cf06d[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Fri Jan 22 18:43:09 2021 -0300
+
+    test: PATCH /accounts/:id - Deve retornar statusCode 404
+
+[33mcommit e5d60fe00375b1c935729bb2a615ea870c503c7c[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Wed Jan 13 15:24:13 2021 -0300
+
+    test: GET /accounts/ - Deve retornar statusCode 200
+
+[33mcommit 4b195627366018c5ad91018077777f155bdebb98[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Mon Jan 11 13:03:48 2021 -0300
+
+    feat: add function getAccount
+
+[33mcommit d2b493f072aaef4fbf6ebf65b427a5bb861f523c[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Mon Jan 11 12:52:44 2021 -0300
+
+    chore: installing jest
+
+[33mcommit cce89434afa3e774342fe1d439f2a4f1627c43ff[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Mon Jan 11 12:34:33 2021 -0300
+
+    feat: addition getAccount and addAccounts
+
+[33mcommit ef1113556fbd883631f802cc91b859c65a8bbb72[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Mon Jan 11 12:08:13 2021 -0300
+
+    chore: installing dependencies on accounts-service
+
+[33mcommit 83ffe76fb632cf2332939a82ab43672d1322db1e[m
+Author: monicavasco <monicavasco@gmail.com>
+Date:   Mon Jan 11 11:47:26 2021 -0300
+
+    chore: installing dependencies accounts-service

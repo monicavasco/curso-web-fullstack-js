@@ -2,11 +2,12 @@ import Sequelize, {Model, Optional} from 'sequelize';
 import database from '../db';
 import {IAccount} from './accounts';
 
-interface AccountCreationAttributes extends Optional<IAccount, "id">{}
 
-export interface AccountModel extends Model<IAccount, AccountCreationAttributes>, IAccount {}
+interface IAccountCreationAttributes extends Optional<IAccount, "id">{}
 
-export default database.define<AccountModel>('account', {
+export interface IAccountModel extends Model<IAccount, IAccountCreationAttributes>, IAccount {}
+
+export default database.define<IAccountModel>('account', {
   id: {
     type: Sequelize.INTEGER.UNSIGNED,
     primaryKey: true,
@@ -14,16 +15,16 @@ export default database.define<AccountModel>('account', {
     allowNull: false
   },
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(150),
     allowNull: false
   },
   email: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(150),
     allowNull: false,
     unique: true
   },
   password: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: false,
   },
   status: {
@@ -32,7 +33,7 @@ export default database.define<AccountModel>('account', {
     defaultValue: 100
   },
   domain: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(100),
     allowNull: false
   }
 })

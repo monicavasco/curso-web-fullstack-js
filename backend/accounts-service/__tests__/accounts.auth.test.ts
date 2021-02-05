@@ -1,23 +1,34 @@
 import request from 'supertest';
+import { IAccount } from '../src/models/accounts';
 import app from '../src/app';
+import repository from '../src/models/accountRepository';
+
+const testEmail = 'jest@accounts.auth.com';
+const hashPassword = '$2a$10$p0Cnz2uTR5xXj4qGxJxBv.5GHgtzeMTsqNb4THd6uHpA9cGOmlSHK';//123456
+const testPassword = '123456';
+
+beforeAll(async () => {
+  const testAccount : IAccount = {
+    name: 'jest',
+    email: testEmail,
+    password: hashPassword,
+    domain: 'jest.com'
+  }
+  await repository.add(testAccount);
+})
+
+afterAll(async () => {
+  await repository.removeByEmail(testEmail);
+})
 
 describe('Testando rotas de autenticação', () => {
   it('POST /accounts/login - 200 OK', async () => {
-    //mocking
-    const newAccount = {
-      id: 1,
-      name: 'Daniel',
-      email: 'danielcastro.rs@gmail.com',
-      password: '123456',
-    }
-    await request(app)
-      .post('/accounts/')
-      .send(newAccount)
+
 
     // testing
     const payload = {
-      email: 'danielcastro.rs@gmail.com',
-      password: '123456'
+      email: testEmail,
+      password: testPassword
     }
 
     const resultado = await request(app)
@@ -31,8 +42,7 @@ describe('Testando rotas de autenticação', () => {
 
   it('POST /accounts/login - 422 Unprocessable Entity', async () => {
     const payload = {
-      email: 'danielcastro.rs@gmail.com',
-      password: 'abc'
+      email: testEmail,
     }
 
     const resultado = await request(app)
@@ -44,8 +54,8 @@ describe('Testando rotas de autenticação', () => {
 
   it('POST /accounts/login - 401 unauthorized', async () => {
     const payload = {
-      email: 'danielcastro.rs@gmail.com',
-      password: 'abc123'
+      email: testEmail,
+      password: testPassword+'1'
     }
 
     const resultado = await request(app)
